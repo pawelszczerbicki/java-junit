@@ -12,6 +12,7 @@ import static org.mockito.Mockito.*;
 
 class UserServiceTest {
     private static final String PWD = random(5);
+    private static final String EMAIL = random(5);
     private User user = new User("mail@mail.com", PWD);
 
     private UserDao dao;
@@ -20,11 +21,12 @@ class UserServiceTest {
 
     private UserService userService;
 
-    private ArgumentCaptor<Mail> captor = ArgumentCaptor.forClass(Mail.class);
+    private ArgumentCaptor<Mail> emailCaptor = ArgumentCaptor.forClass(Mail.class);
+    private ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 
     @BeforeEach
     void init() {
-        dao = new UserDao();
+        dao = mock(UserDao.class);
         client = mock(MailClient.class);
         userService = new UserService(dao, client);
     }
@@ -34,15 +36,26 @@ class UserServiceTest {
         //when
         User registered = userService.register(user.getEmail(), PWD);
 
-        when(client.test(any())).thenReturn("othe");
+        //then
+        verify(client).send(emailCaptor.capture());
+        verify(dao).addUser(userCaptor.capture());
 
-        System.out.println(client.test("test"));
+        assertEquals(user, registered);
+        assertEquals(emailCaptor.getValue().getTo(), user.getEmail());
+        assertEquals(userCaptor.getValue(), user);
+    }
+
+    @Test
+    void shouldGetUser() {
+        //given
+        when(dao.get(EMAIL)).thenReturn(user);
+
+        //when
+        User expected = userService.get(EMAIL);
 
         //then
-        assertEquals(user, dao.get(user.getEmail()));
-        assertEquals(user, registered);
-        verify(client).send(captor.capture());
-        Mail mailThatWasSuposedToBeSend = captor.getValue();
+        assertEquals(expected, user);
+        verify(dao).get(EMAIL);
     }
 
 }

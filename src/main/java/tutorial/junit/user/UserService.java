@@ -22,6 +22,10 @@ public class UserService {
         return user;
     }
 
+    public User get(String email){
+        return userDao.get(email);
+    }
+
     public void confirmRegistration(String email, String token) {
 
     }
