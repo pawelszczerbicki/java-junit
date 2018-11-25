@@ -41,6 +41,10 @@ public class User {
         this.state = state;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     //TODO use instance of
     public boolean equals(Object o) {
         User u = (User) o;

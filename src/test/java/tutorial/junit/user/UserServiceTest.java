@@ -8,6 +8,7 @@ import tutorial.junit.mail.MailClient;
 
 import static org.apache.commons.lang.RandomStringUtils.random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
@@ -54,8 +55,15 @@ class UserServiceTest {
         User expected = userService.get(EMAIL);
 
         //then
+        assertEquals(expected.getPassword(), user.getPassword());
+
         assertEquals(expected, user);
         verify(dao).get(EMAIL);
+    }
+
+    @Test
+    void shouldGetElementFromFakeArray() {
+        assertThrows(IndexOutOfBoundsException.class, () -> userService.testException());
     }
 
 }

@@ -3,6 +3,7 @@ package tutorial.junit.user;
 import tutorial.junit.mail.Mail;
 import tutorial.junit.mail.MailClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
         return user;
     }
 
-    public User get(String email){
+    public User get(String email) {
         return userDao.get(email);
     }
 
@@ -53,5 +54,9 @@ public class UserService {
 
     public void addPermission(Permission p, String username, User current) {
 
+    }
+
+    public void testException() {
+        new ArrayList<>().get(10);
     }
 }
