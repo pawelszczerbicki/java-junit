@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 class UserServiceTest {
     private static final String PWD = random(5);
-    private User user = new User("szczerbicki.pawel@gmail.com", PWD);
+    private User user = new User("mail@mail.com", PWD);
 
     private UserDao dao;
 
