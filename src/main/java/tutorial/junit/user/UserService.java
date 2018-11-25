@@ -1,17 +1,28 @@
 package tutorial.junit.user;
 
+import tutorial.junit.mail.Mail;
+import tutorial.junit.mail.MailClient;
+
 import java.util.List;
 
 public class UserService {
 
-//    private final UserProvider userProvider;
+    private UserDao userDao;
+    private MailClient client;
 
-
-    public User register(String email, String password) {
-        return null;
+    public UserService(UserDao userDao, MailClient client) {
+        this.userDao = userDao;
+        this.client = client;
     }
 
-    public void confirmRegistration() {
+    public User register(String email, String password) {
+        User user = new User(email, password);
+        userDao.addUser(user);
+        client.send(new Mail("Hello", "Welcome", email));
+        return user;
+    }
+
+    public void confirmRegistration(String email, String token) {
 
     }
 
@@ -31,13 +42,12 @@ public class UserService {
         return null;
     }
 
-    public void remove(User current) {
+    public void remove(User current, String toRemoveEmail) {
         //Only admin can remove
+        userDao.remove(toRemoveEmail);
     }
 
     public void addPermission(Permission p, String username, User current) {
 
     }
-
-    //additional task - add user provider
 }

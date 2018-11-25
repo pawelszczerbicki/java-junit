@@ -7,22 +7,17 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Email;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import tutorial.junit.properties.PropertiesProvider;
 
 import static com.mailjet.client.resource.Email.*;
-import static tutorial.junit.properties.Keys.MAIL_PUBLIC_KEY;
-import static tutorial.junit.properties.Keys.MAIL_SECRET_KEY;
 
 public class MailClient {
+    private static final String PUBLIC_KEY = "90779ff3c6d42df37091c22062abf671";
+    private static final String SECRET_KEY = "70fe116895369529d8749b88df3a5425";
 
-    private final PropertiesProvider properties;
-
-    public MailClient(PropertiesProvider properties) {
-        this.properties = properties;
-    }
 
     public void send(Mail email) {
-        MailjetClient client = new MailjetClient(properties.get(MAIL_PUBLIC_KEY), properties.get(MAIL_SECRET_KEY));
+
+        MailjetClient client = new MailjetClient(PUBLIC_KEY, SECRET_KEY);
 
         MailjetRequest mail =
                 new MailjetRequest(Email.resource)
@@ -34,12 +29,12 @@ public class MailClient {
         try {
             client.post(mail);
         } catch (MailjetException | MailjetSocketTimeoutException e) {
-            throw new MailNotSendException("Can not send email", e);
         }
     }
 
-    public static void main(String[] args) {
-        new MailClient(new PropertiesProvider().init()).send(new Mail("some", "some", "szczerbicki.pawel@gmail.com"));
-    }
 
+    public static void main(String[] args) {
+        Mail mail = new Mail("Test", "test", "szczerbicki.pawel@gmail.com");
+        new MailClient().send(mail);
+    }
 }

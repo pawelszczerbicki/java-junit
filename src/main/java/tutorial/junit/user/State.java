@@ -19,6 +19,6 @@ public enum State {
             if(state.name.equals(name))
                 return state;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Can not find enum with name " + name);
     }
 }

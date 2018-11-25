@@ -7,12 +7,13 @@ public class User {
     private String email;
     private String password;
     private ArrayList<Permission> permissions = new ArrayList<>();
-//    private State state;
+    private State state;
 
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+        this.state = State.REGISTERED;
     }
 
     //Add roles and permissions so two lists will be there
@@ -30,6 +31,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     //TODO use instance of
