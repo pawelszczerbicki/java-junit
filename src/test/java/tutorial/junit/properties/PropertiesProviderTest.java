@@ -7,7 +7,7 @@ import static tutorial.junit.properties.Keys.MAIL_PUBLIC_KEY;
 
 class PropertiesProviderTest {
 
-    private PropertiesProvider properties = new PropertiesProvider().init();
+    private PropertiesProvider properties = new PropertiesProvider("app.properties").init();
 
     @Test
     void shouldReadProperty() {

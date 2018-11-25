@@ -6,12 +6,16 @@ import java.util.Properties;
 
 public class PropertiesProvider {
 
-    private static final String FILENAME = "app.properties";
+    private final String filename;
     private Properties props = new Properties();
+
+    public PropertiesProvider(String filename) {
+        this.filename = filename;
+    }
 
     public PropertiesProvider init() {
         try {
-            String path = getClass().getClassLoader().getResource(FILENAME).getPath();
+            String path = getClass().getClassLoader().getResource(filename).getPath();
             props.load(new FileInputStream(path));
         } catch (IOException e) {
             e.printStackTrace();
@@ -23,10 +27,5 @@ public class PropertiesProvider {
 
     public String get(String key) {
         return props.getProperty(key);
-    }
-
-    public boolean getBoolean(String key){
-        //TODO implement
-        return false;
     }
 }

@@ -14,7 +14,8 @@ public class MailClient {
     private static final String PUBLIC_KEY = "90779ff3c6d42df37091c22062abf671";
     private static final String SECRET_KEY = "70fe116895369529d8749b88df3a5425";
 
-
+    //TODO add PropertiesProvider as contstructor parameter, and get
+    //Properties from file
     public void send(Mail email) {
 
         MailjetClient client = new MailjetClient(PUBLIC_KEY, SECRET_KEY);
@@ -32,9 +33,8 @@ public class MailClient {
         }
     }
 
-
-    public static void main(String[] args) {
-        Mail mail = new Mail("Test", "test", "szczerbicki.pawel@gmail.com");
-        new MailClient().send(mail);
+    public String test(String some) {
+        return some + "hello";
     }
+
 }
